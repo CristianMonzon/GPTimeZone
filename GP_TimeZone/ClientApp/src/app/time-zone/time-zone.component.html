@@ -1,0 +1,48 @@
+
+<h1 id="tableLabel">Time zones</h1>
+
+<p *ngIf="!timezones"><span class="spinner-border m-0" role="status"></span></p>
+
+<app-error id="time-zone-component-DivError" [iUError]="iUError" *ngIf="iUError && iUError.hasError()"></app-error>
+
+<div>
+  <button type="button" (click)="GetAllTimes()">Show all</button>
+  <span *ngIf="processAll">
+    ({{partial}}/{{total}})
+  </span>
+  <span *ngIf="processingAll">    
+    <span class="spinner-border spinner-border-sm m-0" role="status"></span>
+  </span>
+</div>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="timezones">
+  <thead>
+    <tr>
+      <th>Area</th>
+      <th>Sub area</th>
+      <th>Region</th>
+      <th>Action</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="row_timezone_{{i}}" *ngFor="let timezone of timezones, let i = index">
+      <td><a id="timezone_{{i}}"></a>
+        {{ timezone.areaName }}
+      </td>
+      <td>
+        {{ timezone.subAreaName }}
+      </td>
+      <td>
+        {{ timezone.regionName }}
+      </td>
+      <td>
+        <button type="button" (click)="GetTime(i,timezone.areaName,timezone.subAreaName,timezone.regionName,false)">Get time</button>
+      </td>
+      <td>        
+        <div *ngIf="timezone.processing"><span class="spinner-border spinner-border-sm m-0" role="status"></span></div>
+        <div *ngIf="!timezone.processing">{{timezone.dateTimeString}}</div>
+      </td>
+    </tr>
+  </tbody>
+</table>
